@@ -2,15 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 # import time
 
+import animation as anim
 
-def opruga_rk(c, k, j, f, a, b, M, h, m, tol, ind):
+
+def opruga_rk(c, k, j, f, a, b, range, step, m, tol, ind):
     def fu(t, u, v):
         return v
 
     def fv(t, u, v):
         return f(t) - c * v - k * u - j * pow(u, 3)
 
-    t = np.arange(0, M + h, h)
+    t = np.arange(0, range + step, step)
     n = len(t)
 
     u = np.zeros(n)
@@ -57,8 +59,8 @@ def opruga_rk(c, k, j, f, a, b, M, h, m, tol, ind):
         kv = np.zeros(m)
 
         for j in range(0, m):
-            ku[j] = h * fu(t[i] + alpha[j] * h, u[i] + beta[j, :] @ ku, v[i] + beta[j, :] @ ku.transpose())
-            kv[j] = h * fv(t[i] + alpha[j] * h, u[i] + beta[j, :] @ kv, v[i] + beta[j, :] @ kv.transpose())
+            ku[j] = step * fu(t[i] + alpha[j] * step, u[i] + beta[j, :] @ ku, v[i] + beta[j, :] @ ku.transpose())
+            kv[j] = step * fv(t[i] + alpha[j] * step, u[i] + beta[j, :] @ kv, v[i] + beta[j, :] @ kv.transpose())
 
         u[i + 1] = u[i] + p @ ku
         v[i + 1] = v[i] + p @ kv
@@ -66,9 +68,17 @@ def opruga_rk(c, k, j, f, a, b, M, h, m, tol, ind):
     plt.plot(t, u)
     plt.show()
 
+    o = {
+        "range": t,
+        "position": u,
+        "speed": v,
+    }
+
 
 if __name__ == '__main__':
     def f(t):
         return 0
 
-    opruga_rk(0.0, 0.3, 0.04, f, 0.1, 0.0, 1000.0, 0.001, 4, 0.001, 0)
+
+    o = opruga_rk(0.0, 0.3, 0.04, f, 0.1, 0.0, 1000.0, 0.001, 4, 0.001, 0)
+    anim.animate(o)
