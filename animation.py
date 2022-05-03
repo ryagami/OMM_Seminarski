@@ -10,7 +10,7 @@ def animate(data):
 
     fig = plt.figure()
 
-    opruga, = plt.plot([], [], 'ro', markersize = 10)
+    opruga, = plt.plot([], [], 'ro', markersize=10)
 
     with writer.saving(fig, "spring_animation.mp4"):
         for i in data["range"]:
