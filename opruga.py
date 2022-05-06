@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 # import time
 
 import animation as anim
+import GUI
 
 
-def opruga_rk(c, k, l, f, a, b, t_range, step, m): # tol, ind):
+def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
     # c, k, l i f su kao iz zadatka
     # a i b su alfa i beta
     # [0, xrange] je interval na kojem racunamo vrednosti sa korakom h
@@ -59,13 +60,13 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m): # tol, ind):
             beta[3, 2] = 1
             p = np.array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
 
-    print(beta)
+    # print(beta)
 
-    for i in range(0, n - 1):
+    for i in range(n - 1):
         ku = np.zeros(int(m))
         kv = np.zeros(int(m))
 
-        for j in range(0, int(m)):
+        for j in range(int(m)):
             ku[j] = step * fu(t[i] + alpha[j] * step, u[i] + beta[j, :] @ ku, v[i] + beta[j, :] @ ku.transpose())
             kv[j] = step * fv(t[i] + alpha[j] * step, u[i] + beta[j, :] @ kv, v[i] + beta[j, :] @ kv.transpose())
 
@@ -95,17 +96,22 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m): # tol, ind):
     ax4.set_xlabel("t")
     ax4.set_ylabel("x''")
 
-    plt.show()
+    # plt.show()
 
-    # o = {
-    #     "range": t,
-    #     "position": u,
-    #     "speed": v,
-    # }
+    o = {
+        "range": t,
+        "position": u,
+        "speed": v,
+        "acceleration": fv(t, u, v)
+    }
+
+    return o
 
 
 if __name__ == '__main__':
     def f(t):
-        return 0.0
+        return -9.81
 
-    opruga_rk(0.0, 0.3, 0.04, f, 1.0, 0.0, 60, 0.001, 4)
+
+    o = opruga_rk(0.0, 0.3, 0.04, f, 1.0, 0.0, 40, 0.001, 4)
+    anim.animate(o, 30)
