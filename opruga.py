@@ -16,16 +16,16 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
     # m je red metode, tol je preciznost
     # ind je indikator da li zelimo modifikovanu RK metodu
 
+    # Solves the system u' = fu(t, u, v), v' = fv(t, u, v)
+
     def fu(t, u, v):
         return v
 
+    # Executes the input string f as python code and prints the result into out to grab the value
     def fv(t, u, v):
         out = StringIO()
         with redirect_stdout(out):
-            exec(f)
-            # ft = out.getvalue().strip("][\\\n").split(" ")
-            # ft = [float(x) for x in ft] if len(ft) > 1 else float(ft[0])
-            # return ft - c * v - k * u - l * pow(u, 3)
+            exec("print(" + f + ")")
             return float(out.getvalue()) - c * v - k * u - l * pow(u, 3)
 
     t = arange(0, t_range + step, step)
@@ -38,7 +38,7 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
 
     beta = zeros((int(m), int(m)))
 
-    # izbor reda Runge-Kutta metode
+    # Choosing Runge-Kutta method order
     match m:
         case 1:
             alpha = 0
