@@ -39,29 +39,28 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
     beta = zeros((int(m), int(m)))
 
     # Choosing Runge-Kutta method order
-    match m:
-        case 1:
+    if m == 1:
             alpha = 0
             beta = 1
             p = 1
-        case 2:
+    elif m == 2:
             alpha = array([0, 1])
             beta[0, 0] = 1
             beta[1, 0] = 1
             p = array([1 / 2, 1 / 2])
-        case 2.1:
+    elif m == 2.1:
             alpha = array([0, 1 / 2])
             beta[0, 0] = 1
             beta[1, 0] = 1 / 2
             p = array([0, 1])
-        case 3:
+    elif m == 3:
             alpha = array([0, 1 / 2, 1])
             beta[0, 0] = 1
             beta[1, 0] = 1 / 2
             beta[2, 0] = -1
             beta[2, 1] = 2
             p = array([1 / 6, 2 / 3, 1 / 6])
-        case _:
+    else :
             alpha = array([0, 1 / 2, 1 / 2, 1])
             beta[0, 0] = 1
             beta[1, 0] = 1 / 2

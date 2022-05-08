@@ -10,6 +10,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 import opruga
+import period
 
 matplotlib.use("TkAgg")
 
@@ -38,6 +39,7 @@ if __name__ == '__main__':
         # If above is "yes", clear all figure subplots and make new ones
 
         o = opruga.opruga_rk(c, k, j, f, alpha, beta, 60, 0.001, 4)
+        p = period.period(k, j, 60, 0.001)
 
         if tickEraseValue:
             fig1.clear()
@@ -52,6 +54,9 @@ if __name__ == '__main__':
             fig4.clear()
             global anim_plot
             anim_plot = fig4.add_subplot(111)
+            fig5.clear()
+            global plot5
+            plot5 = fig5.add_subplot(111)
 
         plot1.plot(o["range"], o["position"])
         canvas1.draw()
@@ -66,12 +71,15 @@ if __name__ == '__main__':
             spring.set_ydata(o["position"][50*i])
             return spring,
 
+
         print([min(o["position"]), max(o["position"])])
         anim_plot.set_ylim([min(o["position"])-0.1, max(o["position"])+0.1])
         spring, = anim_plot.plot(o["range"][-1]/2, o["position"][0], 'ro', markersize=10)
         global anim
         anim = animation.FuncAnimation(fig4, animate, int(len(o["range"])/50), interval=25, blit=False)
 
+        plot5.plot(p['alfa'], p['period'])
+        canvas5.draw()
 
     #############################################
     #                                           #
@@ -160,10 +168,19 @@ if __name__ == '__main__':
     canvas4 = FigureCanvasTkAgg(fig4, plot_tab4)
     canvas4.get_tk_widget().pack(side=TOP, fill=BOTH, expand=True)
     anim_plot = fig4.add_subplot(111)
+
+    plot_tab5 = ttk.Frame(plot_tabs)
+    plot_tabs.add(plot_tab5, text="Period", sticky="news")
+    plot_tab5.columnconfigure(0, weight=1)
+    fig5 = Figure(figsize=(5, 5), dpi=100)
+    canvas5 = FigureCanvasTkAgg(fig5, plot_tab5)
+    canvas5.get_tk_widget().pack(side=TOP, fill=BOTH, expand=True)
+    anim_plot = fig5.add_subplot(111)
+
     global spring
     global anim
 
-    plot_tabs.grid(row=4, column=0, columnspan=6, sticky="news")
+    plot_tabs.grid(row=5, column=0, columnspan=6, sticky="news")
 
     # tickEraseValue = IntVar()
     # tickEraseCanvas = ttk.Checkbutton(root, text="Erase canvases before drawing?", variable=tickEraseValue)
