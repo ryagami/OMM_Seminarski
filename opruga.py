@@ -68,8 +68,6 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
             beta[3, 2] = 1
             p = array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
 
-    # print(beta)
-
     for i in range(n - 1):
         ku = zeros(int(m))
         kv = zeros(int(m))
@@ -80,31 +78,6 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
 
         u[i + 1] = u[i] + p @ ku
         v[i + 1] = v[i] + p @ kv
-
-    # fig, (ax1, ax2, ax3, ax4) = plt.subplots(1, 4)
-    # fig.tight_layout()
-    #
-    # ax1.plot(t, u)
-    # ax1.set_title("Grafik funkcije položaja")
-    # ax1.set_xlabel("t")
-    # ax1.set_ylabel("x")
-    #
-    # ax2.plot(t, v)
-    # ax2.set_title("Grafik funkcije brzine")
-    # ax2.set_xlabel("t")
-    # ax2.set_ylabel("x'")
-    #
-    # ax3.plot(u, v)
-    # ax3.set_title("Fazni grafik")
-    # ax3.set_xlabel("x")
-    # ax3.set_ylabel("x'")
-    #
-    # ax4.plot(t, fv(t, u, v))
-    # ax4.set_title("Grafik ubrzanja")
-    # ax4.set_xlabel("t")
-    # ax4.set_ylabel("x''")
-
-    # plt.show()
 
     o = {
         "range": t,

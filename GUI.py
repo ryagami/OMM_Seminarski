@@ -38,8 +38,12 @@ if __name__ == '__main__':
         tickEraseValue = askyesno("Erase canvas", "Do you want to clear canvases?")
         # If above is "yes", clear all figure subplots and make new ones
 
-        o = opruga.opruga_rk(c, k, j, f, alpha, beta, 60, 0.001, 4)
+        o = opruga.opruga_rk(c, k, j, f, alpha, beta, 40, 0.0001, 4)
         p = period.period(k, j, 60, 0.001)
+
+        fig4.clear()
+        global anim_plot
+        anim_plot = fig4.add_subplot(111)
 
         if tickEraseValue:
             fig1.clear()
@@ -51,9 +55,7 @@ if __name__ == '__main__':
             fig3.clear()
             global plot3
             plot3 = fig3.add_subplot(111)
-            fig4.clear()
-            global anim_plot
-            anim_plot = fig4.add_subplot(111)
+
             fig5.clear()
             global plot5
             plot5 = fig5.add_subplot(111)
