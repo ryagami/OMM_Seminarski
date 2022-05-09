@@ -40,7 +40,7 @@ if __name__ == '__main__':
         tickEraseValue = askyesno("Erase canvas", "Do you want to clear canvases?")
         # If above is "yes", clear all figure subplots and make new ones
 
-        o = opruga.opruga_rk(c, k, j, f, alpha, beta, 40, 0.0001, 4)
+        o = opruga.opruga_rk(c, k, j, f, alpha, beta, t_range, 0.0001, 4)
         p = period.period(k, j, 60, 0.001)
 
         fig4.clear()
