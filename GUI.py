@@ -28,12 +28,14 @@ if __name__ == '__main__':
         f = entry_f.get()
         alpha = entry_alpha.get()
         beta = entry_beta.get()
+        t_range = entry_trange.get()
         c = float(c) if c != "" else 0.0
         k = float(k) if k != "" else 0.0
         j = float(j) if j != "" else 0.0
         f = f if f != "" else "0"
         alpha = float(alpha) if alpha != "" else 0.0
         beta = float(beta) if beta != "" else 0.0
+        t_range = float(t_range) if t_range != "" else 0.0
 
         tickEraseValue = askyesno("Erase canvas", "Do you want to clear canvases?")
         # If above is "yes", clear all figure subplots and make new ones
@@ -124,6 +126,12 @@ if __name__ == '__main__':
     entry_beta = ttk.Entry(root)
     entry_beta.grid(row=1, column=5, padx=5, pady=5, sticky=W + E)
     entry_beta.insert(0, "0")
+    
+    label_trange = ttk.Label(root, text="t_range")
+    label_trange.grid(row=2, column=0)
+    entry_trange = ttk.Entry(root)
+    entry_trange.grid(row=2, column=1,padx=5, pady=5, sticky=W +E)
+    entry_trange.insert(0, "0")
 
     button_plot = ttk.Button(root, text="Plot", command=onCLick_plot)
     button_plot.grid(row=3, column=2, padx=5, pady=5, columnspan=2)
