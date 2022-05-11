@@ -40,33 +40,33 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
 
     # Choosing Runge-Kutta method order
     if m == 1:
-            alpha = 0
-            beta = 1
-            p = 1
+        alpha = 0
+        beta = 1
+        p = 1
     elif m == 2:
-            alpha = array([0, 1])
-            beta[0, 0] = 1
-            beta[1, 0] = 1
-            p = array([1 / 2, 1 / 2])
+        alpha = array([0, 1])
+        beta[0, 0] = 1
+        beta[1, 0] = 1
+        p = array([1 / 2, 1 / 2])
     elif m == 2.1:
-            alpha = array([0, 1 / 2])
-            beta[0, 0] = 1
-            beta[1, 0] = 1 / 2
-            p = array([0, 1])
+        alpha = array([0, 1 / 2])
+        beta[0, 0] = 1
+        beta[1, 0] = 1 / 2
+        p = array([0, 1])
     elif m == 3:
-            alpha = array([0, 1 / 2, 1])
-            beta[0, 0] = 1
-            beta[1, 0] = 1 / 2
-            beta[2, 0] = -1
-            beta[2, 1] = 2
-            p = array([1 / 6, 2 / 3, 1 / 6])
-    else :
-            alpha = array([0, 1 / 2, 1 / 2, 1])
-            beta[0, 0] = 1
-            beta[1, 0] = 1 / 2
-            beta[2, 1] = 1 / 2
-            beta[3, 2] = 1
-            p = array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
+        alpha = array([0, 1 / 2, 1])
+        beta[0, 0] = 1
+        beta[1, 0] = 1 / 2
+        beta[2, 0] = -1
+        beta[2, 1] = 2
+        p = array([1 / 6, 2 / 3, 1 / 6])
+    else:
+        alpha = array([0, 1 / 2, 1 / 2, 1])
+        beta[0, 0] = 1
+        beta[1, 0] = 1 / 2
+        beta[2, 1] = 1 / 2
+        beta[3, 2] = 1
+        p = array([1 / 6, 1 / 3, 1 / 3, 1 / 6])
 
     for i in range(n - 1):
         ku = zeros(int(m))
@@ -79,11 +79,9 @@ def opruga_rk(c, k, l, f, a, b, t_range, step, m):  # tol, ind):
         u[i + 1] = u[i] + p @ ku
         v[i + 1] = v[i] + p @ kv
 
-    o = {
+    return {
         "range": t,
         "position": u,
         "speed": v,
         "acceleration": list(map(fv, t, u, v))
     }
-
-    return o

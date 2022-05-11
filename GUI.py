@@ -16,7 +16,7 @@ matplotlib.use("TkAgg")
 
 if __name__ == '__main__':
     root = Tk()
-    root.title("Strong spring oscillation graphs")
+    root.title("Grafici oscilacije jake opruge")
     root.columnconfigure((1, 3, 5), weight=1)
     root.rowconfigure(4, weight=1)
 
@@ -40,11 +40,11 @@ if __name__ == '__main__':
         tickEraseValue = askyesno("Erase canvas", "Do you want to clear canvases?")
         # If above is "yes", clear all figure subplots and make new ones
 
-        o = opruga.opruga_rk(c, k, j, f, alpha, beta, t_range, 0.0001, 4)
-        p = period.period(k, j, 60, 0.001)
+        o = opruga.opruga_rk(c, k, j, f, alpha, beta, t_range, 0.001, 4)
+        p = period.period_array(k, j, 60, 0.001)
 
         fig4.clear()
-        global anim_plot
+        # global anim_plot
         anim_plot = fig4.add_subplot(111)
 
         if tickEraseValue:
@@ -57,7 +57,6 @@ if __name__ == '__main__':
             fig3.clear()
             global plot3
             plot3 = fig3.add_subplot(111)
-
             fig5.clear()
             global plot5
             plot5 = fig5.add_subplot(111)
@@ -75,14 +74,13 @@ if __name__ == '__main__':
             spring.set_ydata(o["position"][50*i])
             return spring,
 
-
-        print([min(o["position"]), max(o["position"])])
         anim_plot.set_ylim([min(o["position"])-0.1, max(o["position"])+0.1])
         spring, = anim_plot.plot(o["range"][-1]/2, o["position"][0], 'ro', markersize=10)
         global anim
         anim = animation.FuncAnimation(fig4, animate, int(len(o["range"])/50), interval=25, blit=False)
 
-        plot5.plot(p['alfa'], p['period'])
+        plot5.plot(p['alpha'], p['period'])
+        plot5.plot(alpha, period.period(k, j, alpha), 'go', markersize=5)
         canvas5.draw()
 
     #############################################
@@ -127,13 +125,13 @@ if __name__ == '__main__':
     entry_beta.grid(row=1, column=5, padx=5, pady=5, sticky=W + E)
     entry_beta.insert(0, "0")
     
-    label_trange = ttk.Label(root, text="t_range")
+    label_trange = ttk.Label(root, text="range")
     label_trange.grid(row=2, column=0)
     entry_trange = ttk.Entry(root)
-    entry_trange.grid(row=2, column=1,padx=5, pady=5, sticky=W +E)
-    entry_trange.insert(0, "0")
+    entry_trange.grid(row=2, column=1, padx=5, pady=5, sticky=W + E)
+    entry_trange.insert(0, "30")
 
-    button_plot = ttk.Button(root, text="Plot", command=onCLick_plot)
+    button_plot = ttk.Button(root, text="Nacrtaj", command=onCLick_plot)
     button_plot.grid(row=3, column=2, padx=5, pady=5, columnspan=2)
 
     ####################################################
@@ -184,8 +182,9 @@ if __name__ == '__main__':
     plot_tab5.columnconfigure(0, weight=1)
     fig5 = Figure(figsize=(5, 5), dpi=100)
     canvas5 = FigureCanvasTkAgg(fig5, plot_tab5)
+    plot5 = fig5.add_subplot(111)
+    canvas5.draw()
     canvas5.get_tk_widget().pack(side=TOP, fill=BOTH, expand=True)
-    anim_plot = fig5.add_subplot(111)
 
     global spring
     global anim
