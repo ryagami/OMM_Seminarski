@@ -15,7 +15,7 @@ cd OMM_Seminarski
 ```
 
 ```
-python3 ./GUI.py
+python3 GUI.py
 ```
 
 ### Preko ZIP fajla
@@ -23,5 +23,5 @@ python3 ./GUI.py
 - Ekstraktovati ZIP fajl
 - Pokrenuti aplikaciju sa:
 ```
-python3 ./GUI.py
+python3 GUI.py
 ```
